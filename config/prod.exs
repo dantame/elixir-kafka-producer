@@ -13,8 +13,10 @@ use Mix.Config
 # which you typically run after static files are built.
 config :elixir_kafka_producer, ElixirKafkaProducer.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [host: "example.com", port: 80]
+
+config :elixir_kafka_producer, zookeeper_host: "localhost:2181"
+config :kafka_ex, brokers: []
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -59,7 +61,3 @@ config :logger, level: :info
 # for the new static assets to be served after a hot upgrade:
 #
 #     config :elixir_kafka_producer, ElixirKafkaProducer.Endpoint, root: "."
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"
