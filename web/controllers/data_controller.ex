@@ -2,8 +2,7 @@ defmodule ElixirKafkaProducer.DataController do
   use ElixirKafkaProducer.Web, :controller
 
   def index(conn, %{"topic" => topic, "data" => data}) do
-    req_headers = conn.req_headers
-    headers = req_headers
+    headers = conn.req_headers
       |> Enum.filter(&extract_headers/1)
       |> Enum.into(%{})
 
@@ -13,12 +12,14 @@ defmodule ElixirKafkaProducer.DataController do
 
     now = :os.system_time(:seconds)
 
-    augmented_data = Enum.into(headers, %{
-      ip: ip,
-      payload: Enum.into(data, %{ producerTimestamp: now })
-    })
+    payload = data
+      |> Enum.into(%{producerTimestamp: now})
 
-    KafkaEx.produce(topic, 0, Poison.encode!(augmented_data))
+    augmented_data = headers
+      |> Enum.into(%{ip: ip, payload: payload})
+      |> Poison.encode!
+
+    KafkaEx.produce(topic, 0, augmented_data)
     text conn, "OK"
   end
 

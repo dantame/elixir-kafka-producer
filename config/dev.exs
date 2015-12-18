@@ -14,6 +14,8 @@ config :elixir_kafka_producer, ElixirKafkaProducer.Endpoint,
   check_origin: false,
   watchers: []
 
+  config :elixir_kafka_producer, zookeeper_host: "localhost:2181"
+
 # Watch static and templates for browser reloading.
 config :elixir_kafka_producer, ElixirKafkaProducer.Endpoint,
   live_reload: [
@@ -33,4 +35,4 @@ config :logger, :console, format: "[$level] $message\n"
 # and calculating stacktraces is usually expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :kafka_ex, brokers: [{"localhost", 9092}]
+config :kafka_ex, brokers: []
