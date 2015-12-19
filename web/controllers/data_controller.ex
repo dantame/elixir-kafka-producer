@@ -2,6 +2,17 @@ defmodule ElixirKafkaProducer.DataController do
   use ElixirKafkaProducer.Web, :controller
 
   def index(conn, %{"topic" => topic, "data" => data}) do
+    augmented_data = augment_data(conn, data)
+
+    KafkaEx.produce(topic, 0, Poison.encode!(augmented_data))
+    text conn, "OK"
+  end
+
+  def index(conn, %{"topic" => topic}) do
+    json conn, KafkaEx.fetch(topic, 0)
+  end
+
+  defp augment_data(conn, data) do
     headers = conn.req_headers
       |> Enum.filter(&extract_headers/1)
       |> Enum.into(%{})
@@ -15,16 +26,8 @@ defmodule ElixirKafkaProducer.DataController do
     payload = data
       |> Enum.into(%{producerTimestamp: now})
 
-    augmented_data = headers
+    headers
       |> Enum.into(%{ip: ip, payload: payload})
-      |> Poison.encode!
-
-    KafkaEx.produce(topic, 0, augmented_data)
-    text conn, "OK"
-  end
-
-  def index(conn, %{"topic" => topic}) do
-    json conn, KafkaEx.fetch(topic, 0)
   end
 
   defp extract_headers({header, _}) do
