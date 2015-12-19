@@ -13,10 +13,6 @@ defmodule ElixirKafkaProducer.DataController do
   end
 
   defp augment_data(conn, data) do
-    headers = conn.req_headers
-      |> Enum.filter(&extract_headers/1)
-      |> Enum.into(%{})
-
     ip = conn.remote_ip
       |> Tuple.to_list
       |> Enum.join(".")
@@ -26,8 +22,10 @@ defmodule ElixirKafkaProducer.DataController do
     payload = data
       |> Enum.into(%{producerTimestamp: now})
 
-    headers
-      |> Enum.into(%{ip: ip, payload: payload})
+    conn.req_headers
+      |> Enum.filter(&extract_headers/1)
+      |> Enum.into(%{})
+      |> Map.merge(%ElixirKafkaProducer.DataModel{ip: ip, payload: payload})
   end
 
   defp extract_headers({header, _}) do
