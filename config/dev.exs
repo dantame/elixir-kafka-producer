@@ -16,7 +16,13 @@ config :elixir_kafka_producer, ElixirKafkaProducer.Endpoint,
 
 config :elixir_kafka_producer, zookeeper_host: "localhost:2181"
 config :kafka_ex, brokers: []
-config :elixometer, reporter: ElixirKafkaProducer.Reporter, env: Mix.env, metric_prefix: "ElixirKafkaProducer", update_frequency: 1000
+
+config(:exometer, report: [reporters: [{ElixirKafkaProducer.Reporter, []}]])
+config(:elixometer,
+       reporter: ElixirKafkaProducer.Reporter,
+       env: Mix.env,
+       metric_prefix: "elixometer",
+       update_frequency: 1000)
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

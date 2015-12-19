@@ -8,9 +8,14 @@ defmodule ElixirKafkaProducer.Reporter do
       {:ok, state}
     end
 
+    def exometer_report(_, datapoint = :ms_since_reset, _, _, state), do: {:ok, state}
+
     def exometer_report(metric, datapoint, extra, value,  state) do
+      #Uncomment this line to push stats out to console
+      #IO.inspect {metric, datapoint, extra, value, state}
       {:ok, state}
     end
+
 
     def exometer_subscribe(_name, _metric, _timeout, _opts, state) do
       {:ok, state}
