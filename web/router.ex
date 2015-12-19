@@ -5,8 +5,13 @@ defmodule ElixirKafkaProducer.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :monitoring do
+    plug ElixometerPlug
+  end
+
   scope "/", ElixirKafkaProducer do
     pipe_through :api
+    pipe_through :monitoring
     post "/", DataController, :index
     get "/", DataController, :index
   end

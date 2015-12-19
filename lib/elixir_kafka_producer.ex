@@ -11,6 +11,7 @@ defmodule ElixirKafkaProducer do
     children = [
       # Start the endpoint when the application starts
       supervisor(ElixirKafkaProducer.Endpoint, []),
+      worker(ErlangMonitor, [])
       # Here you could define other workers and supervisors as children
       # worker(ElixirKafkaProducer.Worker, [arg1, arg2, arg3]),
     ]

@@ -17,7 +17,7 @@ defmodule ElixirKafkaProducer.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {ElixirKafkaProducer, []},
-     applications: [:phoenix, :cowboy, :logger]]
+     applications: [:phoenix, :cowboy, :logger, :elixometer]]
   end
 
   # Specifies which paths to compile per environment.
@@ -32,6 +32,7 @@ defmodule ElixirKafkaProducer.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
      {:kafka_ex, "~> 0.3.0"},
-     {:zookeeper, github: "vishnevskiy/zookeeper-elixir"}]
+     {:zookeeper, github: "vishnevskiy/zookeeper-elixir"},
+     {:elixometer, github: "pinterest/elixometer"}]
   end
 end

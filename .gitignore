@@ -1,8 +1,10 @@
 # App artifacts
 /_build
+log
 /db
 /deps
 /*.ez
+*.sw*
 
 # Generate on crash by the VM
 erl_crash.dump

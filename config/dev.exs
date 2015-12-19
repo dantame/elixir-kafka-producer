@@ -16,17 +16,7 @@ config :elixir_kafka_producer, ElixirKafkaProducer.Endpoint,
 
 config :elixir_kafka_producer, zookeeper_host: "localhost:2181"
 config :kafka_ex, brokers: []
-
-# Watch static and templates for browser reloading.
-config :elixir_kafka_producer, ElixirKafkaProducer.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{priv/gettext/.*(po)$},
-      ~r{web/views/.*(ex)$},
-      ~r{web/templates/.*(eex)$}
-    ]
-  ]
+config :elixometer, reporter: ElixirKafkaProducer.Reporter, env: Mix.env, metric_prefix: "ElixirKafkaProducer", update_frequency: 1000
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
